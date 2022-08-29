@@ -1,0 +1,14 @@
+venv
+.idea
+.git
+*.pyc
+*.log
+*.pickle
+.env
+config.ini
+config_win.ini
+config_wmnt.ini
+paths_cfg.py
+test.py
+executables/*
+!executables/__init__.py
