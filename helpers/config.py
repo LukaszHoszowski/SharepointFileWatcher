@@ -73,7 +73,6 @@ def files_parser(config, ctx_objects) -> Dict:
     return files
 
 
-
 def source_parser(config, files2monitor):
     logger = logging.getLogger(__name__)
 
@@ -141,6 +140,3 @@ def config_loader(config_path):
     source_exec = source_process_exec(sources)
 
     return mode, poll_time, sources, source_exec, source_paths
-
-
-config_loader('./config.ini')

@@ -41,7 +41,7 @@ def main() -> None:
 
         sleep(poll_time)
 
-        current_check_dates = sources_latest_date_modified(sources)
+        current_check_dates = sources_latest_date_modified(sources, mode)
 
         sources2refresh = sources_comparison(last_check_dates, current_check_dates)
 
