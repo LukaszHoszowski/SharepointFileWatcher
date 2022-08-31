@@ -12,7 +12,6 @@ from helpers.filewatcher import sources_latest_date_modified, sources_comparison
 def main() -> None:
     queue = Queue(-1)
     listener = Process(target=listener_process, args=(listener_configurer, queue))
-    listener.deamon = True
     listener.start()
 
     worker_configurer(queue)
