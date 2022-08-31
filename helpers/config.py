@@ -1,6 +1,6 @@
 import os
 import logging
-from pathlib import Path, WindowsPath
+from pathlib import Path
 from dotenv import load_dotenv
 from configparser import ConfigParser, ExtendedInterpolation, NoSectionError
 from collections import namedtuple

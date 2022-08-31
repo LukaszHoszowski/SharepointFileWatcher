@@ -122,7 +122,7 @@ def process_files(sources2refresh: List, source_exec, source_paths, configurer, 
     configurer(queue)
 
     for source in sources2refresh:
-        processes.append(Process(target=source_exec.get(source), kwargs=source_paths.get(source))),
+        processes.append(Process(target=source_exec.get(source), kwargs=source_paths.get(source)))
 
     for process in processes:
         process.start()
