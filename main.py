@@ -34,8 +34,9 @@ def main() -> None:
             except EOFError:
                 logger_watcher.warning(f'File is empty, check the file if error persist')
             finally:
+
                 if 'last_check_dates' not in locals():
-                    last_check_dates = sources_latest_date_modified(sources)
+                    last_check_dates = sources_latest_date_modified(sources, mode)
                 watching = True
 
         sleep(poll_time)

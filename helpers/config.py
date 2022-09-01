@@ -4,7 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from configparser import ConfigParser, ExtendedInterpolation, NoSectionError
 from collections import namedtuple
-from typing import NamedTuple, Dict, Optional, Tuple, Any
+from typing import NamedTuple, Dict, Optional, Tuple
 from collections.abc import Callable
 
 from office365.runtime.auth.client_credential import ClientCredential
@@ -14,7 +14,7 @@ from executables import *
 
 
 def source_paths_kwargs(sources: Tuple[NamedTuple]) -> Dict[str, Dict[Path, str]]:
-    """Tuple[NamedTuple[str, Any, Dict[Path, str]]]
+    """
         Returns Dict with local paths and file names for pandas script.
 
             Parameters:
@@ -169,11 +169,7 @@ def source_parser(config: ConfigParser, files: Dict) -> Tuple[NamedTuple]:
     return tuple(sources)
 
 
-def config_loader(config_path: str) -> Tuple[str,
-                                             int,
-                                             Tuple[NamedTuple],
-                                             Dict[str, Callable],
-                                             Dict[str, Dict[Path, str]]]:
+def config_loader(config_path: str) -> Tuple[str, int, Tuple[NamedTuple], Dict[str, Callable], Dict[str, Dict[Path, str]]]:
     """
         Main function for config parsing. Returns Tuple of all config values based on 'config.ini' and '.env'.
 
