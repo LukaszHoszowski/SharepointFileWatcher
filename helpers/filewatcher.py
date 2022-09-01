@@ -110,13 +110,6 @@ def sp_files_modify_dates_extractor(single_source: NamedTuple) -> List:
     return sp_files_mod_dates
 
 
-# def single_source_latest_date_modified_sp(single_source: NamedTuple) -> str:
-#
-#     files_mod_dates = sp_files_modify_dates_extractor(single_source)
-#
-#     return max([x.modify_date for x in files_mod_dates]).strftime("%m/%d/%Y %H:%M:%S")
-
-
 def single_source_latest_date_modified(single_source: NamedTuple, mode: str) -> str:
     """
         Returns last modify date for the latest file in collection attached to single source. Depends on selected mode,
