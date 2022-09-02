@@ -3,13 +3,14 @@ import logging
 
 from time import sleep
 from multiprocessing import Process, Queue
+from typing import NoReturn
 
 from helpers.config import config_loader
 from helpers.log import listener_process, listener_configurer, worker_configurer
 from helpers.filewatcher import sources_latest_date_modified, sources_comparison, process_files
 
 
-def main() -> None:
+def main() -> NoReturn:
     queue = Queue(-1)
     listener = Process(target=listener_process, args=(listener_configurer, queue))
     listener.start()
