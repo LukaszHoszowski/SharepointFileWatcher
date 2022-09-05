@@ -16,11 +16,11 @@ def main() -> NoReturn:
     listener.start()
 
     worker_configurer(queue)
-    logger_watcher = logging.getLogger(__name__)
+    logger_main = logging.getLogger(__name__)
 
     mode, poll_time, sources, source_exec, source_paths = config_loader('./config.ini')
 
-    logger_watcher.info(f'FileWatcher started, mode: {mode}, polling interval: {poll_time} sec')
+    logger_main.info(f'FileWatcher started, mode: {mode}, polling interval: {poll_time} sec')
 
     while True:
 
@@ -31,9 +31,9 @@ def main() -> NoReturn:
                     last_check_dates = pickle.load(f)
                     f.close()
             except FileNotFoundError:
-                logger_watcher.warning(f'File not found, probably first start, if error will persist check the access')
+                logger_main.warning(f'File not found, probably first start, if error will persist check the access')
             except EOFError:
-                logger_watcher.warning(f'File is empty, check the file if error persist')
+                logger_main.warning(f'File is empty, check the file if error persist')
             finally:
 
                 if 'last_check_dates' not in locals():
@@ -49,7 +49,7 @@ def main() -> NoReturn:
         last_check_dates = current_check_dates
 
         checked_at = last_check_dates.get('CHECKED_AT')
-        logger_watcher.debug(f'Last check at: {checked_at}')
+        logger_main.debug(f'Last check at: {checked_at}')
 
         if not sources2refresh:
             continue
