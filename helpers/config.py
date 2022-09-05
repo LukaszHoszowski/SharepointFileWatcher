@@ -4,7 +4,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from configparser import ConfigParser, ExtendedInterpolation, NoSectionError
 from collections import namedtuple
-from typing import NamedTuple, Dict, Optional, Tuple
+from typing import NamedTuple, Optional
 from collections.abc import Callable
 
 from office365.runtime.auth.client_credential import ClientCredential
@@ -13,7 +13,7 @@ from office365.sharepoint.client_context import ClientContext
 from executables import *
 
 
-def source_paths_kwargs(sources: Tuple[NamedTuple]) -> Dict[str, Dict[Path, str]]:
+def source_paths_kwargs(sources: tuple[NamedTuple]) -> dict[str, dict[str, Path]]:
     """
         Returns Dict with local paths and file names for pandas script.
 
@@ -27,7 +27,7 @@ def source_paths_kwargs(sources: Tuple[NamedTuple]) -> Dict[str, Dict[Path, str]
                           'file': tuple(source.files)[0]} for source in sources}
 
 
-def source_process_exec(sources: Tuple[NamedTuple]) -> Dict[str, Callable]:
+def source_process_exec(sources: tuple[NamedTuple]) -> dict[str, Callable]:
     """
         Returns Dict with key: resource name, value: function object.
 
@@ -74,7 +74,7 @@ def sp_connect_client(site_url: str, client_id: str, client_secret: str, mode: s
         return None
 
 
-def ctx_parser(config: ConfigParser, mode: str) -> Dict[str, Optional[ClientContext]]:
+def ctx_parser(config: ConfigParser, mode: str) -> dict[str, Optional[ClientContext]]:
     """
         Returns Dict with sharepoint context object compiled with sharepoint tenant url and client_id, client_secret
         taken from '.env' file.
@@ -101,7 +101,7 @@ def ctx_parser(config: ConfigParser, mode: str) -> Dict[str, Optional[ClientCont
     return {k: sp_connect_client(*v, mode) for (k, v) in ctx_params.items()}
 
 
-def files_parser(config: ConfigParser, ctx_collection: Dict[str, Optional[ClientContext]]) -> Dict[str, NamedTuple]:
+def files_parser(config: ConfigParser, ctx_collection: dict[str, Optional[ClientContext]]) -> dict[str, NamedTuple]:
     """
         Returns Dict of NamedTuples with sources, defaults to None.
 
@@ -126,7 +126,7 @@ def files_parser(config: ConfigParser, ctx_collection: Dict[str, Optional[Client
     return files
 
 
-def source_parser(config: ConfigParser, files: Dict) -> Tuple[NamedTuple]:
+def source_parser(config: ConfigParser, files: dict) -> tuple[NamedTuple, ...]:
     """
         Returns Tuple of NamedTuples with sources, defaults to None.
 
@@ -169,7 +169,7 @@ def source_parser(config: ConfigParser, files: Dict) -> Tuple[NamedTuple]:
     return tuple(sources)
 
 
-def config_loader(config_path: str) -> Tuple[str, int, Tuple[NamedTuple], Dict[str, Callable], Dict[str, Dict[Path, str]]]:
+def config_loader(config_path: str) -> tuple[str, int, tuple[NamedTuple, ...], dict[str, Callable], dict[str, dict[str, Path]]]:
     """
         Main function for config parsing. Returns Tuple of all config values based on 'config.ini' and '.env'.
 

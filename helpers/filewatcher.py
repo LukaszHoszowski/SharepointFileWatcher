@@ -8,11 +8,11 @@ from pathlib import Path
 from time import altzone
 from datetime import datetime, timedelta
 from collections import namedtuple
-from typing import NamedTuple, List, Tuple, Dict, NoReturn
+from typing import NamedTuple, NoReturn
 from multiprocessing import Process, Queue
 
 
-def paths_from_file_pattern(local_path: Path, file_pat: str) -> List:
+def paths_from_file_pattern(local_path: Path, file_pat: str) -> list:
     """
         Returns List of absolute paths with file name based on given path and file pattern.
 
@@ -28,7 +28,7 @@ def paths_from_file_pattern(local_path: Path, file_pat: str) -> List:
     return glob.glob(paths)
 
 
-def fname_extractor(paths: List) -> List:
+def fname_extractor(paths: list) -> list:
     """
         Returns Dict with local paths and file names for pandas script.
 
@@ -41,7 +41,7 @@ def fname_extractor(paths: List) -> List:
     return [os.path.basename(x) for x in paths]
 
 
-def local_files_modify_dates_extractor(single_source: NamedTuple) -> List:
+def local_files_modify_dates_extractor(single_source: NamedTuple) -> list:
     """
         Returns collection of file name and last modify date for single source based on local path.
         Supports file name patterns.
@@ -72,7 +72,7 @@ def local_files_modify_dates_extractor(single_source: NamedTuple) -> List:
     return local_files_mod_dates
 
 
-def sp_files_modify_dates_extractor(single_source: NamedTuple) -> List:
+def sp_files_modify_dates_extractor(single_source: NamedTuple) -> list:
     """
         Returns collection of file name and last modify date for single source for sharepoint resources.
         Supports file name patterns.
@@ -136,7 +136,7 @@ def single_source_latest_date_modified(single_source: NamedTuple, mode: str) -> 
     return max([file.modify_date for file in files_mod_dates]).strftime("%m/%d/%Y %H:%M:%S")
 
 
-def sources_latest_date_modified(sources: Tuple[NamedTuple], mode: str) -> Dict[str, str]:
+def sources_latest_date_modified(sources: tuple[NamedTuple], mode: str) -> dict[str, str]:
     """
         Returns dictionary with last modify dates for each resource and saves it to pickle file,
         each time once files are queried adds 'CHECKED_AT'
@@ -165,7 +165,7 @@ def sources_latest_date_modified(sources: Tuple[NamedTuple], mode: str) -> Dict[
     return sources_latest_mod_dates
 
 
-def sources_comparison(last_check_dates: Dict[str, str], current_check_dates: Dict[str, str]) -> List[str]:
+def sources_comparison(last_check_dates: dict[str, str], current_check_dates: dict[str, str]) -> list[str]:
     """
         Returns collection of resources which have changed since list last check
 
@@ -181,8 +181,11 @@ def sources_comparison(last_check_dates: Dict[str, str], current_check_dates: Di
     return modified_sources
 
 
-def process_files(modified_sources: List[str], source_exec: Dict[str, Callable], source_paths: Dict[str, Path],
-                  configurer: Callable, queue: Queue) -> NoReturn:
+def process_files(modified_sources: list[str],
+                  source_exec: dict[str, Callable],
+                  source_paths: dict[str, dict[str, Path]],
+                  configurer: Callable,
+                  queue: Queue) -> NoReturn:
     """
         Process runner, dispatches functions from executables attached to modified resources
 
